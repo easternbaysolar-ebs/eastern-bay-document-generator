@@ -2,7 +2,7 @@ from datetime import date
 import streamlit as st
 from document_generators import *
 
-st.set_page_config(page_title='Eastern Bay Document Generator', page_icon='', layout='wide')
+st.set_page_config(page_title='Eastern Bay Document Generator', page_icon='📄', layout='wide')
 st.markdown('''<style>
 .block-container{max-width:1100px;padding-top:1.2rem}.card{border:1px solid rgba(120,120,120,.3);border-radius:16px;padding:18px;min-height:128px;background:rgba(120,120,120,.05)}
 .badge{display:inline-block;padding:4px 9px;border-radius:999px;border:1px solid rgba(120,120,120,.3);font-size:12px}.title{font-size:20px;font-weight:700;margin:8px 0}.small{opacity:.75}
