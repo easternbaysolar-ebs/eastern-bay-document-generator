@@ -1,0 +1,39 @@
+{
+  "purpose": "This Agreement records the terms between the Consumer and EASTERNBAY SOLAR for survey, design, engineering, supply, installation, testing, commissioning, grid connectivity, documentation, warranty support and five (5) years of comprehensive operation and maintenance of the rooftop solar system under PM Surya Ghar: Muft Bijli Yojana.",
+  "recitals": "The Consumer intends to install a grid-connected rooftop solar plant at the above premises. The Consumer confirms availability of a suitable rooftop/site, subject to technical feasibility. EASTERNBAY SOLAR agrees to execute the project in accordance with applicable MNRE, DISCOM, SERC, BIS/IS/IEC and other applicable technical and safety requirements.",
+  "consumer": [
+    "Submit/authorize submission of the online application on the National Portal, net-metering application, inspection request and relevant documents required for the scheme.",
+    "Provide secure storage and reasonable protection of project material at site until installation/handover.",
+    "Provide the Vendor and its authorized personnel reasonable access to the rooftop/site for survey, installation, testing, commissioning, operation and maintenance, and meter/inverter readings.",
+    "Provide electricity required during installation and water reasonably required for module cleaning.",
+    "Promptly report any malfunction or performance issue noticed during the applicable warranty/O&M period.",
+    "Pay the project consideration in accordance with the mutually agreed payment schedule and pay separately for approved additional/customized work required due to site or building conditions."
+  ],
+  "vendor": [
+    "Compliance: Follow applicable State regulations, MNRE scheme guidelines, technical standards and safety requirements. Supply, installation and commissioning shall be carried out in compliance with applicable requirements.",
+    "Site Survey: Conduct site visit and feasibility assessment, including roof condition/strength, shadow-free area and installation requirements. Where additional work or customization is required, provide an estimate and raise a separate GST invoice after consumer approval.",
+    "Design & Engineering: Prepare/select system design, drawings and components in accordance with standards prescribed by the competent authorities for safe and effective system performance.",
+    "Modules & Inverter: Supply modules and inverters meeting applicable MNRE requirements. Solar modules/cells shall comply with applicable domestic manufacturing requirements under the scheme, where required.",
+    "Procurement & Supply: Procure and supply the complete system and balance-of-system items conforming to applicable BIS/IS/IEC and safety standards required for installation and subsidy processing.",
+    "Installation: Carry out structural and electrical installation work using applicable safety practices and relevant standards.",
+    "Documentation: Provide/assist with technical catalogues, warranty certificates, applicable BIS/IEC/test certificates, serial numbers, layout, electrical SLD, structure drawings and other project documents required for portal submission and handover.",
+    "Project Completion Report: Assist the Consumer in completing and uploading the signed project completion and other required documents on the National Portal.",
+    "Warranty: Provide available system/component warranty documents. The complete system shall be supported for five (5) years from commissioning as applicable under the scheme, and reasonable assistance shall be provided for manufacturer warranty claims.",
+    "Net Meter & Grid Connectivity: Coordinate/scope net-meter procurement, testing, approvals and grid connectivity as mutually agreed and as applicable under DISCOM procedures.",
+    "Testing & Commissioning: Remain available/present as required for testing and commissioning by the DISCOM or its authorized agency.",
+    "Operation & Maintenance: Provide five (5) years of comprehensive operation and maintenance, including periodic checks and guidance to the Consumer regarding module cleaning and system upkeep, subject to applicable terms and exclusions.",
+    "Insurance Before Commissioning: Insurance cost, if applicable, relating to material transit/storage before commissioning shall be within the Vendor's scope unless otherwise agreed in writing.",
+    "Applicable Standards: Supply components and services meeting technical standards/specifications prescribed by MNRE and the relevant State DISCOM.",
+    "Project Cost & Payment: Project cost and payment schedule shall be mutually agreed. Milestone-based payments may be recorded in this Agreement/proforma invoice.",
+    "Disputes: Any dispute concerning supply, installation, maintenance or payment shall first be attempted to be resolved mutually and thereafter in accordance with applicable law. MNRE/DISCOM shall not be a party to private contractual disputes between Consumer and Vendor.",
+    "Subsidy / Project Documents: Provide the project documents within the Vendor's scope and assist the Consumer with uploading/submission for processing of subsidy. Subsidy sanction/disbursement remains subject to Government/portal/DISCOM eligibility, verification and processing.",
+    "Plant Performance: At commissioning, the plant shall meet applicable performance requirements under the scheme, including Performance Ratio requirements where prescribed. Required calibrated instruments/sensors shall be arranged as applicable for testing/commissioning."
+  ],
+  "general": [
+    "This Agreement shall be read together with the applicable PM Surya Ghar: Muft Bijli Yojana guidelines, DISCOM procedures, approved quotation/proforma invoice, technical specifications and warranty documents.",
+    "Any change in system capacity, equipment make/model, commercial terms or additional work should be recorded in writing and acknowledged by both parties.",
+    "Neither party shall overwrite, alter or use the other party's signature/details section. Each party has a separate execution block below.",
+    "The Consumer confirms that the details entered below are true to the best of their knowledge and that they have read/understood the terms before signing."
+  ],
+  "execution": "The parties sign this Agreement in acceptance of the above terms. Consumer details are intentionally placed in a separate block so they do not overlap or overwrite the Vendor's details or signature area."
+}

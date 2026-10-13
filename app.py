@@ -12,8 +12,8 @@ st.image(str(ASSETS / ('logo-light.png' if theme == 'White' else 'logo-dark.jpeg
 st.title('📄 Eastern Bay Document Generator')
 st.caption('Choose a document, enter only the required details, then download as PDF or Word.')
 
-docs=['Annexure A','Annexure C','Synchronization Certificate']
-cols=st.columns(3)
+docs=['Annexure A','Annexure C','Synchronization Certificate','Agreement Generator']
+cols=st.columns(4)
 for col,name in zip(cols,docs):
     with col:
         st.markdown(f"<div class='card'><div class='badge'>Ready</div><div class='title'>{name}</div><div class='small'>Generate PDF or Word</div></div>",unsafe_allow_html=True)
@@ -32,7 +32,7 @@ if selected=='Annexure A':
         with c1:
             installer=st.text_input('Company name','EASTERN BAY SOLAR'); plant_capacity=st.text_input('Plant capacity','3KW'); consumer_name=st.text_input('Consumer name',''); address=st.text_area('Address',''); sanction_no=st.text_input('Sanction number',''); sanction_date=st.date_input('Sanction date',date(2026,7,13),format='DD/MM/YYYY')
         with c2:
-            module_capacity=st.text_input('PV module capacity','585'); module_count=st.number_input('Number of modules',1,1000,6); serial_text=st.text_area('PV module serial numbers - one per line','WS06269073077693\nWS06269073077700\nWS06269073077701\nWS07269073842710\nWS07269073842713\nWS07269073842714',height=130); module_make=st.text_input('Panel company','Waaree Energies Limited'); po_number=st.text_input('Purchase order / invoice number','E B S 9 2'); po_date=st.date_input('Purchase order / invoice date',date(2026,9,10),format='DD/MM/YYYY'); cell_manufacturer=st.text_input('Cell manufacturer name','Waaree Energies Limited'); cell_gst_invoice=st.text_input('Cell GST invoice number',''); declaration_name=st.text_input('Declaration consumer name',''); installation_company=st.text_input('Installation company','EASTERN BAY SOLAR')
+            module_capacity=st.text_input('PV module capacity','585'); module_count=st.number_input('Number of modules',1,1000,6); serial_text=st.text_area('PV module serial numbers - one per line','',height=130); module_make=st.text_input('Panel company','Waaree Energies Limited'); po_number=st.text_input('Purchase order / invoice number',''); po_date=st.date_input('Purchase order / invoice date',date(2026,9,10),format='DD/MM/YYYY'); cell_manufacturer=st.text_input('Cell manufacturer name','Waaree Energies Limited'); cell_gst_invoice=st.text_input('Cell GST invoice number',''); declaration_name=st.text_input('Declaration consumer name',''); installation_company=st.text_input('Installation company','EASTERN BAY SOLAR')
         st.markdown('**Fixed signature section**'); s1,s2,s3=st.columns(3)
         with s1: sign_company=st.text_input('Signature company','EASTERN BAY SOLAR'); sign_name=st.text_input('Authorized signatory','')
         with s2: designation=st.text_input('Designation','Managing Director'); phone=st.text_input('Phone','')
@@ -54,7 +54,7 @@ elif selected=='Annexure C':
             mobile=st.text_input('Mobile',''); email=st.text_input('Email',''); aadhaar=st.text_input('Aadhaar card number',''); latitude=st.text_input('Latitude',''); longitude=st.text_input('Longitude',''); ca_no=st.text_input('CA number',''); sanction_load=st.text_input('Sanction load','4.000'); solar_pv_modules=st.text_input('Solar PV modules / Make','Renew Photovoltaics Private Limited'); power_each_module=st.text_input('Power of each PV module (Wp)','550')
         st.markdown('### Page 3 - Editable fields')
         p31,p32,p33=st.columns(3)
-        with p31: inverter_serial=st.text_input('Inverter serial number','270602C14F')
+        with p31: inverter_serial=st.text_input('Inverter serial number','')
         with p32: inverter_capacity=st.text_input('Inverter capacity','4 KW')
         with p33: string1_voc=st.text_input('String 1 Voc','550V')
         fmt=st.selectbox('Download format',['PDF (.pdf)','Word (.docx)'],key='cfmt'); go=st.button('Generate Annexure C',use_container_width=True)
@@ -85,7 +85,12 @@ elif selected=='Synchronization Certificate':
     if go:
         d=locals().copy(); payload=build_sync_pdf(d) if fmt.startswith('PDF') else build_sync_docx(d); download_output('Synchronization Certificate',fmt,payload,applicant_name)
 
-else:
-    st.info('Select one of the three documents above to begin.')
+elif selected=='Agreement Generator':
+    st.divider()
+    from agreement_page import render_agreement_page
+    render_agreement_page()
 
-st.divider(); st.caption('Eastern Bay Document Generator - Annexure A, Annexure C and Synchronization Certificate')
+else:
+    st.info('Select a document above to begin.')
+
+st.divider(); st.caption('Eastern Bay Document Generator - Annexure A, Annexure C, Synchronization Certificate and Agreement Generator')
