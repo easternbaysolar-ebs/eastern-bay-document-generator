@@ -126,7 +126,7 @@ def _annex_c_page1_rows(d):
         ['Title of the Project:', 'ROOFTOPSOLAR', 'SPV Capacity (kWp):', d['spv_capacity']],
         ['Category of the organization/beneficiary:', 'DOMESTIC', 'Name of the contact person:', d['contact_person']],
         ['Address of contact person:', d['address'], '', ''],
-        ['State:', 'Andhra Pradesh', 'District/City:', d.get('district_city', 'ANAKAPALLI')],
+        ['State:', 'Andhra Pradesh', 'District/City:', d['district_city']],
         ['Mobile:', d['mobile'], 'Email:', d['email']],
         ['Aadhaar Card Number (For Residential)', d['aadhaar'], 'Latitude:', d['latitude']],
         ['', '', 'Longitude:', d['longitude']],

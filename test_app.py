@@ -1,6 +1,7 @@
 """Regression coverage for location exports and appearance switching."""
 import io
 import unittest
+from unittest.mock import patch
 from docx import Document
 from pypdf import PdfReader
 from streamlit.testing.v1 import AppTest
@@ -25,6 +26,28 @@ class GeneratorTests(unittest.TestCase):
         app.radio[0].set_value('Black').run()
         self.assertFalse(app.exception)
         self.assertEqual(next(w.value for w in app.text_input if w.label == 'District / City'),d['district_city'])
+
+    def test_download_refreshes_after_location_edit(self):
+        with patch('streamlit.download_button') as download:
+            app = AppTest.from_file('app.py').run()
+            app.button[1].click().run()
+            app.button[-1].click().run()
+            original = download.call_args.kwargs['data']
+            for location in ['KAKINADA & CITY', 'VISAKHAPATNAM', '']:
+                download.reset_mock()
+                app.text_input(key='district_city').set_value(location).run()
+                self.assertFalse(app.exception)
+                self.assertEqual(download.call_count, 1)
+                payload = download.call_args.kwargs['data']
+                text = PdfReader(io.BytesIO(payload)).pages[0].extract_text()
+                self.assertNotEqual(payload, original)
+                self.assertNotIn('ANAKAPALLI', text)
+                if location:
+                    self.assertIn(location, text)
+            app.text_input(key='district_city').set_value('KAKINADA & CITY').run()
+            app.selectbox[0].set_value('Word (.docx)').run()
+            doc = Document(io.BytesIO(download.call_args.kwargs['data']))
+            self.assertIn('KAKINADA & CITY', '\n'.join(c.text for t in doc.tables for r in t.rows for c in r.cells))
 
     def test_all_forms_and_themes(self):
         for theme in ['White','Black']:

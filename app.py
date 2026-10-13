@@ -45,7 +45,7 @@ if selected=='Annexure A':
 elif selected=='Annexure C':
     st.divider(); st.subheader('Annexure C')
     st.info('Page 2 is fully fixed. On Page 3, only Inverter Serial Number, Inverter Capacity and String 1 Voc are editable.')
-    with st.form('c'):
+    with st.container():
         st.markdown('### Page 1 - Editable fields')
         c1,c2=st.columns(2)
         with c1:
@@ -57,9 +57,21 @@ elif selected=='Annexure C':
         with p31: inverter_serial=st.text_input('Inverter serial number','270602C14F')
         with p32: inverter_capacity=st.text_input('Inverter capacity','4 KW')
         with p33: string1_voc=st.text_input('String 1 Voc','550V')
-        fmt=st.selectbox('Download format',['PDF (.pdf)','Word (.docx)'],key='cfmt'); go=st.form_submit_button('Generate Annexure C',use_container_width=True)
+        fmt=st.selectbox('Download format',['PDF (.pdf)','Word (.docx)'],key='cfmt'); go=st.button('Generate Annexure C',use_container_width=True)
     if go:
-        d=locals().copy(); payload=build_annexure_c_pdf(d) if fmt.startswith('PDF') else build_annexure_c_docx(d); download_output('Annexure C',fmt,payload,contact_person)
+        st.session_state['annexure_c_ready'] = True
+    if st.session_state.get('annexure_c_ready'):
+        d = dict(financial_year=financial_year, sanction_letter_no=sanction_letter_no,
+                 installed_agency=installed_agency, spv_capacity=spv_capacity,
+                 contact_person=contact_person, address=address, district_city=district_city,
+                 mobile=mobile, email=email, aadhaar=aadhaar, latitude=latitude, longitude=longitude,
+                 ca_no=ca_no, sanction_load=sanction_load, solar_pv_modules=solar_pv_modules,
+                 power_each_module=power_each_module, inverter_serial=inverter_serial,
+                 inverter_capacity=inverter_capacity, string1_voc=string1_voc)
+        payload=build_annexure_c_pdf(d) if fmt.startswith('PDF') else build_annexure_c_docx(d)
+        location_label = district_city or '(blank)'
+        st.caption(f'District / City in this download: {location_label}. Downloads refresh when you finish editing a field.')
+        download_output('Annexure C',fmt,payload,contact_person + '_' + district_city)
 
 elif selected=='Synchronization Certificate':
     st.divider(); st.subheader('Synchronization Certificate')
