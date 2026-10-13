@@ -26,6 +26,7 @@ class AgreementTests(unittest.TestCase):
         self.assertEqual(d['consumer_name'],'SAMPLE CONSUMER')
         self.assertIn('Example Town',d['consumer_address'])
         self.assertEqual(d['project_cost'],'222000')
+        self.assertEqual(parse_agreement_text('Consumername:IMAGESAMPLE')['consumer_name'],'IMAGESAMPLE')
         self.assertEqual(indian_amount('2,22,000'),'Rs. 2,22,000/-')
         self.assertNotIn('project_cost',parse_agreement_text('Loan amount: 222000\nLoan status: Not applied'))
         self.assertNotIn('agreement_date',parse_agreement_text('Agreement date: 31/02/2026'))

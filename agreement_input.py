@@ -14,7 +14,7 @@ LABELS = {
     'project_cost': r'(?:total project cost|project cost|project amount|total amount|installation cost)',
     'agreement_date': r'(?:agreement date|date of agreement)',
 }
-ALL_LABELS = '|'.join(LABELS.values()) + r'|district(?: / city)?|state|pin(?: code)?|loan(?: amount| status)?|aadhaar(?: number)?|email|category|discom|sanction(?:ed)? load'
+ALL_LABELS = ('|'.join(LABELS.values()) + r'|district(?: / city)?|state|pin(?: code)?|loan(?: amount| status)?|aadhaar(?: number)?|email|category|discom|sanction(?:ed)? load').replace(' ',r'\s*')
 
 
 def parse_agreement_text(text):
@@ -22,6 +22,8 @@ def parse_agreement_text(text):
     text = text.replace('\r','').strip()
     result = {}
     for field, pattern in LABELS.items():
+        # Screenshot OCR can join label words, e.g. "Consumername".
+        pattern = pattern.replace(' ',r'\s*')
         match = re.search(r'(?im)^\s*(?:'+pattern+r')\s*(?::|=|\t|$)\s*',text)
         if not match:
             continue
