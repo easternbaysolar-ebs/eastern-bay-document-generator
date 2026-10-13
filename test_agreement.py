@@ -18,8 +18,107 @@ System capacity: 3 kW
 Project cost: 222000
 Agreement date: 13/10/2026'''
 
+# Mirrors National Portal labels and OCR reading order, using synthetic values.
+PORTAL_DETAILS = '''ApplicationNumber:NP-TEST26-12345678
+Application Details
+State:
+Andhra Pradesh
+SC/ST Status:
+Name of Discom:
+Example Discom
+Circle Name:
+Example District
+Full NameofPremisesOwnerPerson:
+EXAMPLE APPLICANT
+Division Name:
+EXAMPLE DIVISION
+Gender:
+Female
+Subdivision Name:
+Example Town
+Address of Premises for installation:
+1-00 Example Road Sample
+Scheme Name:
+PM Surya Ghar: Muft Bijli Yojana
+Village
+Bank Name:
+Pincode:
+000000
+IFSC Code:
+Type of Location:
+Account Holder Name:
+Consumer Account Number (CA No.):
+0000000000000000
+Name as per Bank:
+Mobile:
+9000000000
+Account Number:
+Email:
+Bank Remarks:
+District:
+Example District
+Give Up Subsidy:
+No
+Application Submission Date:
+12/10/2026
+DCR Category Type:
+With DCR
+Bank Account Type:
+Total Cost of RTS Installation:
+Solar Rooftop Details
+Sanctioned Load (kw):
+4.000
+Category Name:
+Residential
+Proposed Capacity (kWp):
+3.000
+Existing Installed Capacity (kWp):
+0.000
+Latitude:
+Net Eligible Capacity (kWp):
+3.000
+Longitude:
+Name of Vendor:
+EASTERNBAY SOLAR'''
+
 
 class AgreementTests(unittest.TestCase):
+    def test_national_portal_import_and_download(self):
+        d = parse_agreement_text(PORTAL_DETAILS)
+        self.assertEqual(d['consumer_name'],'EXAMPLE APPLICANT')
+        self.assertEqual(d['system_capacity'],'3 kW')
+        self.assertEqual(d['mobile'],'9000000000')
+        self.assertNotIn('project_cost',d)
+        self.assertNotIn('agreement_date',d)
+        for part in ['1-00 Example Road Sample','Village','Example District','Andhra Pradesh','000000']:
+            self.assertIn(part,d['consumer_address'])
+        self.assertNotIn('PM Surya',d['consumer_address'])
+        with patch('streamlit.download_button') as download:
+            app=AppTest.from_file('pages/1_Agreement_Generator.py').run()
+            app.text_area(key='agreement_import_text').set_value(PORTAL_DETAILS)
+            app.button(key='agreement_apply_text').click().run()
+            self.assertFalse(app.exception)
+            self.assertEqual(app.text_input(key='agreement_consumer_name').value,'EXAMPLE APPLICANT')
+            self.assertIn('Village',app.text_area(key='agreement_consumer_address').value)
+            self.assertTrue(app.button(key='agreement_generate').disabled)
+            app.text_input(key='agreement_project_cost').set_value('Rs. 2,22,000/-').run()
+            self.assertFalse(app.button(key='agreement_generate').disabled)
+            app.button(key='agreement_generate').click().run()
+            self.assertFalse(app.exception)
+            pdf=PdfReader(io.BytesIO(download.call_args.kwargs['data']))
+            self.assertEqual(len(pdf.pages),3)
+            self.assertIn('EXAMPLE APPLICANT',pdf.pages[0].extract_text())
+            self.assertIn('Rs. 2,22,000/-',pdf.pages[1].extract_text())
+
+    def test_image_read_fills_review_without_apply_button(self):
+        uploaded=io.BytesIO(b'synthetic image placeholder')
+        with patch('streamlit.file_uploader',return_value=uploaded), patch('agreement_page.ocr_engine',return_value=object()), patch('agreement_page.extract_image_text',return_value=PORTAL_DETAILS):
+            app=AppTest.from_file('pages/1_Agreement_Generator.py').run()
+            app.button(key='agreement_read_image').click().run()
+            self.assertFalse(app.exception)
+            self.assertEqual(app.text_input(key='agreement_consumer_name').value,'EXAMPLE APPLICANT')
+            self.assertIn('Village',app.text_area(key='agreement_consumer_address').value)
+
     def test_labelled_import_and_amounts(self):
         d = parse_agreement_text(DETAILS)
         self.assertEqual(d['agreement_date'],date(2026,10,13))

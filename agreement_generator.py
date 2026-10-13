@@ -22,7 +22,9 @@ VENDOR_PHONE = '+91 93468 28227'
 
 def indian_amount(value):
     try:
-        amount = Decimal(str(value).replace(',', '').strip())
+        raw = re.sub(r'^(?:rs\.?|inr|₹)\s*','',str(value).strip(),flags=re.I)
+        raw = re.sub(r'\s*/-\s*$','',raw)
+        amount = Decimal(raw.replace(',', '').strip())
     except InvalidOperation as exc:
         raise ValueError('Enter a valid project amount.') from exc
     if not amount.is_finite() or amount <= 0 or amount > Decimal('9999999999.99'):
